@@ -1,0 +1,61 @@
+/* 3D Settings */
+.scene {
+  --size: 100px;
+  --vx: 0 * var(--size);
+  --vy: 0 * var(--size);
+  --vz: 0 * var(--size);
+  perspective-origin: center center;
+  perspective: 200px;
+  height: 100vh;
+  overflow: hidden;
+  background: #f06d06;
+}
+
+.tiles {
+  transform: rotateX(90deg) translateX(calc(-50% + var(--vx)))
+    translateY(calc(var(--vz))) translateZ(calc(-1 * var(--vy)));
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+}
+
+.tile {
+  transform-style: preserve-3d;
+}
+
+/* Non-3d-CSS Styles */
+body {
+  font-family: system-ui;
+  color: white;
+  text-align: center;
+  word-wrap: break-word;
+  margin: 0;
+  padding: 0;
+}
+
+.tiles {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+}
+
+.tile {
+  width: var(--size);
+  height: var(--size);
+  background: green;
+  margin: 0;
+  vertical-align: middle;
+  box-sizing: border-box;
+  border: Solid 1px Gray;
+  position: relative;
+}
+
+.tile:nth-child(2n) {
+  left: calc(0px - var(--size) / 2);
+}
+.tile:nth-child(2n + 1) {
+  left: calc(0px + var(--size) / 2);
+}
+
+.tile:hover {
+  background-color: yellow;
+}
