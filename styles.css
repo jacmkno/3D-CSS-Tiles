@@ -1,14 +1,21 @@
 /* 3D Settings */
 .scene {
   --size: 100px;
-  --vx: 0 * var(--size);
-  --vy: 0 * var(--size);
-  --vz: 0 * var(--size);
+  --vx: 0;
+  --vy: 0;
+  --vz: 0;
+  --rx: 0deg;
+  --ry: 0deg;
   perspective-origin: center center;
-  perspective: 200px;
+  perspective: 800px;
   height: 100vh;
-  overflow: hidden;
-  background: #f06d06;
+}
+
+.observer {
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--ry)) rotateX(var(--rx));
+  transform-origin: center bottom;
 }
 
 .tiles {
@@ -30,6 +37,8 @@ body {
   word-wrap: break-word;
   margin: 0;
   padding: 0;
+  overflow: hidden;
+  background: #f06d06;
 }
 
 .tiles {
