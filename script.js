@@ -30,15 +30,29 @@ function enterFrame() {
   setTimeout(enterFrame, 1000 / S.fps);
 }
 
+function moveOnAngle({ dx = 0, dz = 0 }) {
+  const A = {};
+  for (var a in S.angle) {
+    A[a] = -((Math.PI * S.angle[a]) % 360) / 180;
+  }
+
+  S.speed.z += Math.cos(A.y) * dz;
+  S.speed.x += Math.sin(A.y) * dz;
+
+  S.speed.z += Math.cos(A.y + Math.PI / 2) * dx;
+  S.speed.x += Math.sin(A.y + Math.PI / 2) * dx;
+}
+
 const S0 = JSON.parse(JSON.stringify(S));
 const scene = document.querySelector(".scene");
 const KEYS = {};
+const distance = () => S.keyPressForce / S.fps;
 
 const keyHandlers = {
-  ArrowRight: () => (S.speed.x -= S.keyPressForce / S.fps),
-  ArrowLeft: () => (S.speed.x += S.keyPressForce / S.fps),
-  ArrowUp: () => (S.speed.z += S.keyPressForce / S.fps),
-  ArrowDown: () => (S.speed.z -= S.keyPressForce / S.fps),
+  ArrowRight: () => moveOnAngle({ dx: -distance() }),
+  ArrowLeft: () => moveOnAngle({ dx: distance() }),
+  ArrowUp: () => moveOnAngle({ dz: distance() }),
+  ArrowDown: () => moveOnAngle({ dz: -distance() }),
   r: () => (S = JSON.parse(JSON.stringify(S0))),
   " ": () => (S.speed.y += (0.6 * S.keyPressForce) / S.fps)
 };
