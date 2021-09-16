@@ -33,7 +33,7 @@ function enterFrame() {
 function moveOnAngle({ dx = 0, dz = 0 }) {
   const A = {};
   for (var a in S.angle) {
-    A[a] = -((Math.PI * S.angle[a]) % 360) / 180;
+    A[a] = -(Math.PI * S.angle[a]) / 180;
   }
 
   S.speed.z += Math.cos(A.y) * dz;
