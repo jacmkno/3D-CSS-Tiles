@@ -1,6 +1,6 @@
 /* 3D Settings */
 .scene {
-  --size: 100px;
+  --size: 500px;
   --vx: 0;
   --vy: 0;
   --vz: 0;
@@ -27,6 +27,7 @@
 
 .tile {
   transform-style: preserve-3d;
+  position: absolute;
 }
 
 /* Non-3d-CSS Styles */
@@ -54,15 +55,7 @@ body {
   margin: 0;
   vertical-align: middle;
   box-sizing: border-box;
-  border: Solid 1px Gray;
-  position: relative;
-}
-
-.tile:nth-child(2n) {
-  left: calc(0px - var(--size) / 2);
-}
-.tile:nth-child(2n + 1) {
-  left: calc(0px + var(--size) / 2);
+  border: Solid calc(var(--size) / 100) Gray;
 }
 
 .tile:hover {

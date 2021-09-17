@@ -7,8 +7,67 @@ let S = {
   fps: 60,
   crashEnergyLoss: 0.3,
   keyPressForce: 600,
-  friction: 10
+  friction: 10,
+  tileSize: 1000
 };
+
+function showTiles(ground) {
+  const nTiles = document.querySelector(".tiles");
+  nTiles.innerHTML = "";
+  nTiles.style.width = `${S.tileSize * ground.w}px`;
+  nTiles.style.height = `${S.tileSize * ground.h}px`;
+  nTiles.style.setProperty("--size", `${S.tileSize}px`);
+  ground.tiles.forEach(([x, y]) => {
+    var n = document.createElement("div");
+    n.className = "tile";
+    n.style.left = `${x * S.tileSize}px`;
+    n.style.top = `${y * S.tileSize}px`;
+    nTiles.appendChild(n);
+  });
+}
+
+function generateTiles(cnt) {
+  const rt = { "0x0": [0, 0] };
+  let l = rt["0x0"];
+  for (var i = cnt; i > 1; i--) {
+    let n = null;
+    switch (Math.floor(Math.random() * 4)) {
+      case 0:
+        n = [l[0] + 1, l[1]];
+        break;
+      case 1:
+        n = [l[0], l[1] + 1];
+        break;
+      case 2:
+        n = [l[0] - 1, l[1]];
+        break;
+      case 3:
+      default:
+        n = [l[0], l[1] - 1];
+        break;
+    }
+    const k = n.join("x");
+    if (rt[k]) {
+      i++;
+      l = n;
+      continue;
+    }
+    rt[k] = l = n;
+  }
+  const L = Object.values(rt);
+  let minX = L.reduce((p, t) => (p !== null && p < t[0] ? p : t[0]), null);
+  let maxX = L.reduce((p, t) => (p !== null && p > t[0] ? p : t[0]), null);
+  let minY = L.reduce((p, t) => (p !== null && p < t[1] ? p : t[1]), null);
+  let maxY = L.reduce((p, t) => (p !== null && p > t[1] ? p : t[1]), null);
+
+  return {
+    w: maxX - minX,
+    h: maxY - minY,
+    tiles: L.map((t) => [t[0] - minX, t[1] - minY])
+  };
+}
+
+showTiles(generateTiles(100));
 
 function enterFrame() {
   S.speed.y += S.gravity / S.fps;
@@ -92,7 +151,7 @@ window.addEventListener(
   (e) => {
     e.preventDefault();
     const tc = e.changedTouches[0];
-    if (e.targetTouches.length == 1) {
+    if (e.targetTouches.length === 1) {
       const dX = (KEYS.tmX || tc.screenX) - tc.screenX;
       const dY = (KEYS.tmY || tc.screenY) - tc.screenY;
       KEYS.tmX = tc.screenX;
