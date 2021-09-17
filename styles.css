@@ -9,6 +9,7 @@
   perspective-origin: center center;
   perspective: 800px;
   height: 100vh;
+  transform-style: preserve-3d;
 }
 
 .observer {
@@ -23,6 +24,7 @@
     translateY(calc(var(--vz))) translateZ(calc(-1 * var(--vy)));
   transform-origin: center bottom;
   transform-style: preserve-3d;
+  background: #f06d06;
 }
 
 .tile {
@@ -39,7 +41,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: #f06d06;
+  background: #b5dcff;
 }
 
 .tiles {

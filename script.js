@@ -8,7 +8,7 @@ let S = {
   crashEnergyLoss: 0.3,
   keyPressForce: 600,
   friction: 10,
-  tileSize: 1000
+  tileSize: 500
 };
 
 function showTiles(ground) {
@@ -61,8 +61,8 @@ function generateTiles(cnt) {
   let maxY = L.reduce((p, t) => (p !== null && p > t[1] ? p : t[1]), null);
 
   return {
-    w: maxX - minX,
-    h: maxY - minY,
+    w: maxX - minX + 1,
+    h: maxY - minY + 1,
     tiles: L.map((t) => [t[0] - minX, t[1] - minY])
   };
 }
@@ -76,9 +76,9 @@ function enterFrame() {
   for (var d in S.pos) {
     S.pos[d] += S.speed[d];
   }
-  if (S.pos.y < 0) {
+  if (S.pos.y < 100) {
     S.speed.y = -S.crashEnergyLoss * S.speed.y;
-    S.pos.y = 0;
+    S.pos.y = 100;
   }
 
   scene.style.setProperty("--vy", S.pos.y + "px");
